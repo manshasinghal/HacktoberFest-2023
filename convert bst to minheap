@@ -1,0 +1,61 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+class Node{
+public:
+int data;
+Node *left;
+Node *right;
+
+Node(int d){
+  this->data = d;
+  this->left=NULL;
+  this->right =NULL;
+}
+void inorder(Node* root , vector<int> &arr) {
+    //base case
+    if(root == NULL) {
+        return  ;
+    }
+
+    inorder(root->left , arr);
+    arr.push_back(root->data);
+    inorder(root->right , arr);
+   
+}
+
+
+void fillpreorder(Node* root ,vector<int> &arr , int index){
+   //base case
+    if(root == NULL) {
+        return ;
+    }
+   root->data = arr[index++];
+  fillpreorder(root->left , arr , index);
+  fillpreorder(root->right , arr , index);
+    
+}
+Node* convertbst(Node* root){
+  vector<int>arr;
+  int i = 0 ;
+  inorder(root , arr);
+  fillpreorder(root , arr , i);
+  return root;
+}
+};
+int main() {
+  Node root = Node(4);
+    root->left = getNode(2);
+    root->right = getNode(6);
+    root->left->left = getNode(1);
+    root->left->right = getNode(3);
+    root->right->left = getNode(5);
+    root->right->right = getNode(7);
+ 
+    // Function call
+    convertToMinHeapUtil(root);
+    cout << "Preorder Traversal:" << endl;
+    preorderTraversal(root);
+ 
+    return 0;
+}
